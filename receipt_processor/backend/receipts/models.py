@@ -13,7 +13,11 @@ class Item:
     """A receipt item."""
 
     shortDescription: str
-    price: str
+    price: float
+
+    def __post_init__(self):
+        """Initialize types for members"""
+        self.price = float(self.price)
 
 
 @dataclass
@@ -31,6 +35,7 @@ class Receipt:
     def __post_init__(self):
         """Initialize types for members"""
         self.items = [Item(**item) for item in self.items]
+        self.total = float(self.total)
 
     @property
     def id(self):

@@ -43,4 +43,8 @@ class AddReceiptService(BaseService):
         id = receipt.id
         self.receipt_db[id] = receipt
 
+        # Verify total is correct
+        if receipt.total != sum([item.price for item in receipt.items]):
+            return None
+
         return receipt.id
