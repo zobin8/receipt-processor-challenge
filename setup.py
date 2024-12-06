@@ -13,5 +13,6 @@ setup(
     install_requires=[
         'flask-restx==1.3.0',
         'wheel==0.45.1',
+        'click==8.1.7',
     ]
 )
