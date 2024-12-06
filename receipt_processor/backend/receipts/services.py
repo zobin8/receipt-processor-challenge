@@ -40,11 +40,40 @@ class AddReceiptService(BaseService):
             None if not
         """
 
-        id = receipt.id
-        self.receipt_db[id] = receipt
-
         # Verify total is correct
         if receipt.total != sum([item.price for item in receipt.items]):
             return None
 
-        return receipt.id
+        id = receipt.id
+        self.receipt_db[id] = receipt
+
+        return id
+
+
+class GetReceiptService(BaseService):
+    """Service to get a receipt from the DB"""
+
+    def __init__(
+        self,
+        receipt_db: Dict[str, Receipt]  = RECEIPT_DB,
+    ):
+        """Create the service.
+
+        Arguments:
+            receipt_db: Dict[str, Receipt]
+                The receipt database, currently a dict.
+        """
+        self.receipt_db = receipt_db
+
+    def start(self, id: str) -> Optional[Receipt]:
+        """Get a receipt from the database
+
+        Arguments:
+            id: str
+                The receipt ID
+
+        Returns:
+            Receipt if found
+            None if not
+        """
+        return self.receipt_db.get(id)
