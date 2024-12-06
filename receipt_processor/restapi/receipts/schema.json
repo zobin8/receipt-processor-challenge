@@ -69,7 +69,7 @@
             "id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "example": "adb6b560-0eef-42bc-9d16-df48f30e89b2"
+                "example": "c7ddb147-9a99-499b-a4ca-62681a1b0fb2"
             }
         }
     },

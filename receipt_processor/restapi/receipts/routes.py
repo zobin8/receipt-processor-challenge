@@ -10,6 +10,7 @@ from flask_restx import Resource
 from flask import request
 
 from receipt_processor.backend.receipts.models import Receipt
+from receipt_processor.backend.receipts.services import AddReceiptService
 from receipt_processor.restapi.infrastructure.utils import process_schema
 from receipt_processor.restapi.infrastructure.utils import parse_type
 
@@ -34,8 +35,12 @@ class Process(Resource):
     @api.response(400, 'The receipt is invalid')
     def post(self) -> Any:
         """Submits a receipt for processing."""
-        r = Receipt(**request.json)
-        print(r)
+        rcpt = Receipt(**request.json)
+        id = AddReceiptService().start(rcpt)
+        if id is None:
+            return 'Invalid Receipt', 400
+
+        return dict(id=id)
 
 
 @api.route('/<id>/points')
