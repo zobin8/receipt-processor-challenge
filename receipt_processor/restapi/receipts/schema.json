@@ -31,7 +31,25 @@
                 "type": "array",
                 "minItems": 1,
                 "items": {
-                    "$ref": "#/definitions/Item"
+                    "type": "object",
+                    "required": [
+                        "shortDescription",
+                        "price"
+                    ],
+                    "properties": {
+                        "shortDescription": {
+                            "description": "The Short Product Description for the item.",
+                            "type": "string",
+                            "pattern": "^[\\w\\s\\-]+$",
+                            "example": "Mountain Dew 12PK"
+                        },
+                        "price": {
+                            "description": "The total price payed for this item.",
+                            "type": "string",
+                            "pattern": "^\\d+\\.\\d{2}$",
+                            "example": "6.49"
+                        }
+                    }
                 }
             },
             "total": {
@@ -42,24 +60,26 @@
             }
         }
     },
-    "Item": {
+    "ReceiptID": {
         "type": "object",
         "required": [
-            "shortDescription",
-            "price"
+            "id"
         ],
         "properties": {
-            "shortDescription": {
-                "description": "The Short Product Description for the item.",
+            "id": {
                 "type": "string",
-                "pattern": "^[\\w\\s\\-]+$",
-                "example": "Mountain Dew 12PK"
-            },
-            "price": {
-                "description": "The total price payed for this item.",
-                "type": "string",
-                "pattern": "^\\d+\\.\\d{2}$",
-                "example": "6.49"
+                "pattern": "^\\S+$",
+                "example": "adb6b560-0eef-42bc-9d16-df48f30e89b2"
+            }
+        }
+    },
+    "Points": {
+        "type": "object",
+        "properties": {
+            "points": {
+                "type": "integer",
+                "format": "int64",
+                "example": 100
             }
         }
     }
