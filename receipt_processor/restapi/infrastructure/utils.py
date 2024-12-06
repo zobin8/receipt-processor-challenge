@@ -1,9 +1,12 @@
 """Utility methods shared across endpoints."""
 
+from functools import wraps
+from typing import Callable
 import json
 
 from flask_restx import Api
 from flask_restx import Model
+from flask import request
 
 
 def process_schema(path: str, name: str, api: Api) -> Model:
@@ -27,3 +30,24 @@ def process_schema(path: str, name: str, api: Api) -> Model:
     api.add_model(name, model)
     
     return model
+
+
+def parse_type(arg: str, constructor: Callable):
+    """Decorator to parse a type that is not handled by FLASK"""
+
+    def decorator(func: Callable):
+        """Decorator method. Modifies the decorated function."""
+
+        wraps(func)
+        def wrapper(*args, **kwargs):
+            """Wrapper around function. Will convert the type"""
+            try:
+                request.json[arg] = constructor(request.json[arg])
+            except Exception as e:
+                return str(e), 400
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
