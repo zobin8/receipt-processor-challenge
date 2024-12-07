@@ -167,7 +167,7 @@ class GetPointsService(BaseService):
         if receipt is None:
             return None
         
-        if receipt.points is None:
+        if receipt.points is None:  # Calculate points and store in DB
             receipt.points = self.score_receipt.start(receipt)
 
         return receipt.points
