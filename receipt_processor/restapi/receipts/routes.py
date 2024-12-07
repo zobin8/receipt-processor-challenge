@@ -11,6 +11,7 @@ from flask import request
 
 from receipt_processor.backend.receipts.models import Receipt
 from receipt_processor.backend.receipts.services import AddReceiptService
+from receipt_processor.backend.receipts.services import GetPointsService
 from receipt_processor.restapi.infrastructure.utils import process_schema
 from receipt_processor.restapi.infrastructure.utils import parse_type
 
@@ -51,3 +52,8 @@ class Points(Resource):
     @api.response(400, 'No receipt found for that id')
     def get(self, id: str) -> Any:
         """Returns the points awarded for the receipt."""
+        points = GetPointsService().start(id)
+        if points is None:
+            return 'Receipt not found', 400
+        
+        return dict(points=points)

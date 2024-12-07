@@ -31,6 +31,7 @@ class Receipt:
     total: float
 
     _id: Optional[str] = None
+    points: Optional[int] = None
 
     def __post_init__(self):
         """Initialize types for members"""
