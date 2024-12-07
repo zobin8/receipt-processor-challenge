@@ -1,0 +1,1 @@
+"""Submodule for /receipts tests"""

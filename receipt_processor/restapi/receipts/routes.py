@@ -49,11 +49,11 @@ class Points(Resource):
     """Returns the points awarded for the receipt."""
 
     @api.response(200, 'The number of points awarded', points_schema)
-    @api.response(400, 'No receipt found for that id')
+    @api.response(404, 'No receipt found for that id')
     def get(self, id: str) -> Any:
         """Returns the points awarded for the receipt."""
         points = GetPointsService().start(id)
         if points is None:
-            return 'Receipt not found', 400
+            return 'Receipt not found', 404
         
         return dict(points=points)
